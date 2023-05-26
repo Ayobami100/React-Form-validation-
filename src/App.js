@@ -33,7 +33,7 @@ function App() {
             placeholder="Enter your Fullname"
             {...register("name", { required: true,
             pattern: {
-                value: /^[a-zA-Z_]+( [a-zA-Z]+)*$/g,
+                value: /^[a-zA-Z_]+( [a-zA-Z]+)$/g,
                 // value: /^\w+(?=(,?\s))(?:\1\w+)$/g,
              } })}
           />
