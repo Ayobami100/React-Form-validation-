@@ -13,9 +13,13 @@ function App() {
     alert(JSON.stringify(data));
   };
 
+  const handleChange = (e) =>{
+    console.log(e.target);
+  }
+
   return (
     <div className="App">
-      <h1>Rigistration Form</h1>
+      <h1>Registration Form</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
 
         {/* <div className='formInput'>
@@ -29,11 +33,11 @@ function App() {
 
         <div className='formInput'>
           <label htmlFor="name">Name:</label>
-          <input
+          <input focused= 'true' onChange ={(e) => handleChange()}
             placeholder="Enter your Fullname"
             {...register("name", { required: true,
             pattern: {
-                value: /^[a-zA-Z_]+( [a-zA-Z]+)*$/g,
+                value: /^[a-zA-Z_]+( [a-zA-Z]+)$/g,
                 // value: /^\w+(?=(,?\s))(?:\1\w+)$/g,
              } })}
           />
@@ -93,23 +97,25 @@ function App() {
           </label>
           </div>
           {errors.gender?.type === 'required' &&
-            'Tell us what your Gender is.'}
+            <p>Tell us what your Gender is</p>}
         </div>
 
         <div className='formInput'>
           <label htmlFor="high">
             Highest Qualification:
           </label>
-          <select name="high">
+          <select name="high"    {...register('high', { required: true })}>
             <option value=""></option>
             <option value="5">School Cert</option>
             <option value="6">Bsc</option>
             <option value="6">Masters</option>
           </select>
+          {errors.high?.type === 'required' &&
+            <p>This is required</p> }
         </div>
 
         <div className='formInput'>
-          <label htmlFor="gender">
+          <label htmlFor="skills">
             Skills:
           </label>
           <div className='genderInput'>
@@ -143,6 +149,8 @@ function App() {
             React
           </label>
           </div>
+            {errors.skill?.type === 'required' &&
+            <p>Choose atleast two skills</p>}
         </div>
 
         <div className='formInput'>

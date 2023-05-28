@@ -63,6 +63,12 @@ input, select, textarea{
   border-radius: 5px;
   border: 1px solid gray;
 }
+
+input:invalid[focused="true"]{
+  border: 1px solid red;
+}
+
+
 textarea{
 resize: none;
 }
@@ -80,3 +86,4 @@ label{
 .genderInput > label{
 margin: 10px;
 }
+
