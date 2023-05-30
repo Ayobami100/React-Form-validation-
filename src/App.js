@@ -1,4 +1,4 @@
-import { isValidElement } from 'react';
+import { isValidElement, useState } from 'react';
 import './App.css';
 import { useForm } from "react-hook-form";
 
@@ -33,10 +33,12 @@ function App() {
                 value: /^[a-zA-Z_]+( [a-zA-Z]+)$/g,
                 // value: /^\w+(?=(,?\s))(?:\1\w+)$/g,
              } })}
+
              id='name'
              aria-invalid={errors.name ? "true" : "false"}
              
-             style={{border: errors.name ? "2px solid red": "2px solid green"}}
+             style={{border: errors.name ? "2px solid red": ""}}
+
           />
           {errors.name && <p>It is required & not more than two names</p>}
           
@@ -52,7 +54,7 @@ function App() {
             value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
          } })}
          aria-invalid={errors.email ? "true" : "false"}
-         style={{border: errors.email ? "2px solid red": "2px solid green"}}
+         style={{border: errors.email ? "2px solid red": " "}}
          />
           {errors.email && <p>This is required</p>}
         </div>
@@ -68,7 +70,7 @@ function App() {
               // value: /^\w+(?=(,?\s))(?:\1\w+)$/g,
            } })}
            aria-invalid={errors.phone ? "true" : "false"}
-           style={{border: errors.phone ? "2px solid red": "2px solid green"}}
+           style={{border: errors.phone ? "2px solid red": " "}}
            />
           {errors.phone && <p>Phone Number should be 11 digits</p>}
         </div>
@@ -111,7 +113,7 @@ function App() {
           </label>
           <select name="high"    {...register('high', { required: true })}
              aria-invalid={errors.high ? "true" : "false"}
-             style={{border: errors.high ? "2px solid red": "2px solid green"}}
+             style={{border: errors.high ? "2px solid red": " "}}
              >
             <option value=""></option>
             <option value="School Cert">School Cert</option>
@@ -171,8 +173,9 @@ function App() {
               // value: /^\w+(?=(,?\s))(?:\1\w+)$/g,
            } })}
            aria-invalid={errors.comment ? "true" : "false"}
-           style={{border: errors.comment ? "2px solid red": "2px solid green"}}
-           
+           style={{border: errors.comment ? "2px solid red": ""}}
+           onMouseEnter={{border: errors.comment ? "2px solid red": " "}}
+           onMouseLeave={{border: errors.comment ? "2px solid red": " "}}
 
            ></textarea>
           {errors.comment && <p>This is required and must be more than 20 characters</p>}
