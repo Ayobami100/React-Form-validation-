@@ -1,47 +1,45 @@
+import { isValidElement } from 'react';
 import './App.css';
 import { useForm } from "react-hook-form";
 
 function App() {
   const {
     register,
-    formState: { errors },
+    formState: { errors, isDirty, isLoading, isValid, isSubmitting},
     handleSubmit
   } = useForm({
     mode: "onChange" // "onChange"
   });
-  const onSubmit = (data) => {
-    alert(JSON.stringify(data));
-  };
-
-  const handleChange = (e) =>{
-    console.log(e.target);
+  const onSubmit = data => {
+    console.log(data);
   }
+
+
+
+
 
   return (
     <div className="App">
       <h1>Registration Form</h1>
+
       <form onSubmit={handleSubmit(onSubmit)}>
-
-        {/* <div className='formInput'>
-          <label htmlFor="firstName">First Name</label>
-          <input
-            placeholder="bill"
-            {...register("firstName", { required: true, maxLength: 2 })}
-          />
-          {errors.firstName && <p>This is required</p>}
-        </div> */}
-
+      
         <div className='formInput'>
           <label htmlFor="name">Name:</label>
-          <input focused= 'true' onChange ={(e) => handleChange()}
+          <input 
             placeholder="Enter your Fullname"
             {...register("name", { required: true,
             pattern: {
                 value: /^[a-zA-Z_]+( [a-zA-Z]+)$/g,
                 // value: /^\w+(?=(,?\s))(?:\1\w+)$/g,
              } })}
+             id='name'
+             aria-invalid={errors.name ? "true" : "false"}
+             
+             style={{border: errors.name ? "2px solid red": "2px solid green"}}
           />
           {errors.name && <p>It is required & not more than two names</p>}
+          
         </div>
 
         <div className='formInput'>
@@ -52,7 +50,10 @@ function App() {
            {...register("email", { required: true,
               pattern: {
             value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-         } })} />
+         } })}
+         aria-invalid={errors.email ? "true" : "false"}
+         style={{border: errors.email ? "2px solid red": "2px solid green"}}
+         />
           {errors.email && <p>This is required</p>}
         </div>
 
@@ -65,7 +66,10 @@ function App() {
             pattern: {
               value: /^[0-9]*$/g,
               // value: /^\w+(?=(,?\s))(?:\1\w+)$/g,
-           } })}/>
+           } })}
+           aria-invalid={errors.phone ? "true" : "false"}
+           style={{border: errors.phone ? "2px solid red": "2px solid green"}}
+           />
           {errors.phone && <p>Phone Number should be 11 digits</p>}
         </div>
 
@@ -73,7 +77,7 @@ function App() {
           <label htmlFor="gender">
             Gender:
           </label>
-          <div className='genderInput'>
+          <div className='formInput'>
             <label>
                 <input
                   {...register('gender', { required: true })}
@@ -81,6 +85,7 @@ function App() {
                   name="gender"
                   value="male"
                   id="male"
+                  
                 />{' '}
               Male
             </label>
@@ -104,11 +109,14 @@ function App() {
           <label htmlFor="high">
             Highest Qualification:
           </label>
-          <select name="high"    {...register('high', { required: true })}>
+          <select name="high"    {...register('high', { required: true })}
+             aria-invalid={errors.high ? "true" : "false"}
+             style={{border: errors.high ? "2px solid red": "2px solid green"}}
+             >
             <option value=""></option>
-            <option value="5">School Cert</option>
-            <option value="6">Bsc</option>
-            <option value="6">Masters</option>
+            <option value="School Cert">School Cert</option>
+            <option value="Bsc">Bsc</option>
+            <option value="Masters">Masters</option>
           </select>
           {errors.high?.type === 'required' &&
             <p>This is required</p> }
@@ -150,7 +158,7 @@ function App() {
           </label>
           </div>
             {errors.skill?.type === 'required' &&
-            <p>Choose atleast two skills</p>}
+            <p>Choose a skill</p>}
         </div>
 
         <div className='formInput'>
@@ -161,11 +169,16 @@ function App() {
             pattern: {
               value:  /^.{20,}$/g,
               // value: /^\w+(?=(,?\s))(?:\1\w+)$/g,
-           } })}></textarea>
+           } })}
+           aria-invalid={errors.comment ? "true" : "false"}
+           style={{border: errors.comment ? "2px solid red": "2px solid green"}}
+           
+
+           ></textarea>
           {errors.comment && <p>This is required and must be more than 20 characters</p>}
         </div>
 
-        <input type="submit" />
+        <button type="submit">Submit</button>
       </form>
     </div>
   );
