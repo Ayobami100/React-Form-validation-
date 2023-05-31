@@ -10,8 +10,32 @@ function App() {
   } = useForm({
     mode: "onChange" // "onChange"
   });
+
+  const [showForm, setShowForm] = useState(true)
+  const [name,setName]= useState("")
+  const [email,setEmail]= useState("")
+  const [phone,setPhone]= useState("")
+  const [gender,setGender]= useState("")
+  const [skill,setSkill]= useState("")
+  const [comment,setComment]= useState("")
+  const [high,setHigh]= useState("")
+
+  //SUBMIT BUTTON
   const onSubmit = data => {
     console.log(data);
+
+    setShowForm(false)
+
+    let {name, skill, email,comment,high,phone,gender} = data
+
+    setName(name)
+    setSkill(skill)
+    setEmail(email)
+    setComment(comment)
+    setHigh(high)
+    setPhone(phone)
+    setGender(gender)
+
   }
 
 
@@ -22,6 +46,7 @@ function App() {
     <div className="App">
       <h1>Registration Form</h1>
 
+    {showForm?
       <form onSubmit={handleSubmit(onSubmit)}>
       
         <div className='formInput'>
@@ -79,7 +104,7 @@ function App() {
           <label htmlFor="gender">
             Gender:
           </label>
-          <div className='formInput'>
+          <div className='genderInput'>
             <label>
                 <input
                   {...register('gender', { required: true })}
@@ -174,8 +199,6 @@ function App() {
            } })}
            aria-invalid={errors.comment ? "true" : "false"}
            style={{border: errors.comment ? "2px solid red": ""}}
-           onMouseEnter={{border: errors.comment ? "2px solid red": " "}}
-           onMouseLeave={{border: errors.comment ? "2px solid red": " "}}
 
            ></textarea>
           {errors.comment && <p>This is required and must be more than 20 characters</p>}
@@ -183,6 +206,19 @@ function App() {
 
         <button type="submit">Submit</button>
       </form>
+      :
+      <div>
+        <h2>FullName: {name}</h2>
+        <h2>Email: {email}</h2>
+        <h2>Phone: {phone}</h2>
+        <h2>Gender: {gender}</h2>
+        <h2>Highest Qualification: {high}</h2>
+        <h2>Skill: {skill.join(",")}</h2>
+        <h2>Comments: {comment}</h2>
+      <button onClick={()=>setShowForm(!showForm)}>Back to Form</button>
+
+      </div>
+      }
     </div>
   );
 }
